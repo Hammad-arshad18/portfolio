@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Home, User, Briefcase, LayoutGrid, MessageSquare, Award, Tag, Activity, Folder, Code2 } from 'lucide-react';
+import { Menu, X, Home, User, Briefcase, LayoutGrid, MessageSquare, Award, Tag, Activity, Folder, Code2, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 const navLinks = [
@@ -36,14 +36,22 @@ export default function Navbar() {
 
     return (
         <>
-            {/* Top Left Menu Button (Like Jayden Theme) */}
-            <div className="fixed top-6 left-6 z-50">
+            {/* Top Left Menu Button & Theme Toggle */}
+            <div className="fixed top-6 left-6 z-50 flex flex-col gap-4">
                 <button
                     onClick={() => setMobileMenuOpen(true)}
                     className="w-12 h-12 bg-surface text-white border border-border flex items-center justify-center rounded hover:bg-primary transition-colors hover:border-primary shadow-lg"
                     aria-label="Open menu"
                 >
                     <Menu className="w-5 h-5" />
+                </button>
+                
+                <button
+                    onClick={toggleTheme}
+                    className="w-12 h-12 bg-surface text-white border border-border flex items-center justify-center rounded hover:bg-primary transition-colors hover:border-primary shadow-lg"
+                    aria-label="Toggle theme"
+                >
+                    {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 </button>
             </div>
 
@@ -93,7 +101,7 @@ export default function Navbar() {
                             animate={{ x: 0 }}
                             exit={{ x: '-100%' }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="relative w-80 max-w-[80vw] h-full bg-[#111111] border-r border-border flex flex-col p-8"
+                            className="relative w-80 max-w-[80vw] h-full bg-surface border-r border-border flex flex-col p-8"
                         >
                             <div className="flex items-center justify-between mb-12">
                                 <div className="text-xl font-display font-medium text-white uppercase tracking-widest pl-4 relative">

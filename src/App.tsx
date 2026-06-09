@@ -29,7 +29,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 function Portfolio() {
     return (
-        <div className="min-h-screen flex flex-col selection:bg-primary/30 selection:text-primary relative bg-[#000000]">
+        <div className="min-h-screen flex flex-col selection:bg-primary/30 selection:text-primary relative bg-background">
             <ScrollProgress />
             <CustomCursor />
             <Navbar />
@@ -42,7 +42,7 @@ function Portfolio() {
                         alt="Coder Workspace"
                         className="w-full h-full object-cover grayscale opacity-30 mix-blend-luminosity"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#000000]"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background"></div>
                 </div>
             </div>
 
