@@ -43,24 +43,26 @@ function Portfolio() {
                         className="w-full h-full object-cover grayscale opacity-30 mix-blend-luminosity"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#000000]"></div>
-                    <div className="absolute bottom-12 left-12">
-                        <h2 className="text-4xl font-display font-bold text-white mb-2">Hammad Arshad</h2>
-                        <p className="text-primary font-display text-xl uppercase tracking-widest min-h-[30px]">
-                            <TypewriterRoles />
-                        </p>
-                        <div className="flex space-x-4 mt-6">
-                            <a href="https://github.com/Hammad-arshad18" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300">
-                                <Github className="w-4 h-4" />
-                            </a>
-                            <a href="https://www.linkedin.com/in/hammad-arshad18" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300">
-                                <Linkedin className="w-4 h-4" />
-                            </a>
+                </div>
+            </div>
 
-                            <a href="https://wa.me/971568687899" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-[#25D366] hover:bg-[#25D366] transition-all duration-300">
-                                <WhatsAppIcon className="w-4 h-4" />
-                            </a>
-                        </div>
-                    </div>
+            {/* Fixed Left Panel Content (z-20 so icons are clickable over main) */}
+            <div className="hidden lg:block fixed bottom-12 left-12 z-20 pointer-events-auto">
+                <h2 className="text-4xl font-display font-bold text-white mb-2">Hammad Arshad</h2>
+                <p className="text-primary font-display text-xl uppercase tracking-widest min-h-[30px]">
+                    <TypewriterRoles />
+                </p>
+                <div className="flex space-x-4 mt-6">
+                    <a href="https://github.com/Hammad-arshad18" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300">
+                        <Github className="w-4 h-4" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/hammad-arshad18" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300">
+                        <Linkedin className="w-4 h-4" />
+                    </a>
+
+                    <a href="https://wa.me/971568687899" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-[#25D366] hover:bg-[#25D366] transition-all duration-300">
+                        <WhatsAppIcon className="w-4 h-4" />
+                    </a>
                 </div>
             </div>
 

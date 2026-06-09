@@ -32,17 +32,19 @@ export default function Projects() {
     const [repos, setRepos] = useState<GitHubRepo[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const reposPerPage = 4;
 
     const GITHUB_USERNAME = 'Hammad-arshad18';
 
     useEffect(() => {
         const fetchGithubRepos = async () => {
             try {
-                const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=4`);
+                const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`);
                 if (!response.ok) throw new Error('Failed to fetch repositories');
 
                 const data = await response.json();
-                const filteredRepos = data.filter((repo: any) => !repo.fork).slice(0, 4);
+                const filteredRepos = data.filter((repo: any) => !repo.fork);
                 setRepos(filteredRepos);
             } catch (err) {
                 console.error('Error fetching GitHub repos:', err);
@@ -90,7 +92,7 @@ export default function Projects() {
                         ) : (
                             <div className="space-y-16">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {repos.map((repo, index) => (
+                                    {repos.slice((currentPage - 1) * reposPerPage, currentPage * reposPerPage).map((repo, index) => (
                                         <motion.div
                                             key={repo.id}
                                             initial={{ opacity: 0, scale: 0.95 }}
@@ -137,6 +139,28 @@ export default function Projects() {
                                         </motion.div>
                                     ))}
                                 </div>
+
+                                {repos.length > reposPerPage && (
+                                    <div className="flex justify-center items-center mt-12 space-x-6 relative z-10">
+                                        <button
+                                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                            disabled={currentPage === 1}
+                                            className="px-6 py-3 bg-[#111111] border border-border text-white hover:bg-primary hover:border-primary transition-all font-display tracking-widest uppercase text-sm disabled:opacity-50 disabled:hover:bg-[#111111] disabled:hover:border-border disabled:cursor-not-allowed"
+                                        >
+                                            Previous
+                                        </button>
+                                        <span className="font-display text-gray-400 tracking-widest text-sm">
+                                            {currentPage} / {Math.ceil(repos.length / reposPerPage)}
+                                        </span>
+                                        <button
+                                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(repos.length / reposPerPage)))}
+                                            disabled={currentPage === Math.ceil(repos.length / reposPerPage)}
+                                            className="px-6 py-3 bg-[#111111] border border-border text-white hover:bg-primary hover:border-primary transition-all font-display tracking-widest uppercase text-sm disabled:opacity-50 disabled:hover:bg-[#111111] disabled:hover:border-border disabled:cursor-not-allowed"
+                                        >
+                                            Next
+                                        </button>
+                                    </div>
+                                )}
 
                                 {/* GitHub Contributions Calendar */}
                                 <div className="pt-10 border-t border-border">
