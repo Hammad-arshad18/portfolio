@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Folder, Github, ExternalLink } from 'lucide-react';
 import { GitHubCalendar } from 'react-github-calendar';
+import { useTheme } from '../contexts/ThemeContext';
 import {
     Radar,
     RadarChart,
@@ -34,6 +35,7 @@ export default function Projects() {
     const [error, setError] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const reposPerPage = 4;
+    const { theme } = useTheme();
 
     const GITHUB_USERNAME = 'Hammad-arshad18';
 
@@ -99,7 +101,7 @@ export default function Projects() {
                                             whileInView={{ opacity: 1, scale: 1 }}
                                             viewport={{ once: true, margin: "-50px" }}
                                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                                            className="group relative flex flex-col justify-between p-8 bg-[#111111] border border-border hover:bg-primary transition-colors duration-300"
+                                            className="group relative flex flex-col justify-between p-8 bg-surface border border-border hover:bg-primary transition-colors duration-300"
                                         >
                                             <div className="flex justify-between items-start mb-8 relative z-10">
                                                 <Folder className="w-10 h-10 text-primary group-hover:text-white transition-colors" />
@@ -145,7 +147,7 @@ export default function Projects() {
                                         <button
                                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                             disabled={currentPage === 1}
-                                            className="px-6 py-3 bg-[#111111] border border-border text-white hover:bg-primary hover:border-primary transition-all font-display tracking-widest uppercase text-sm disabled:opacity-50 disabled:hover:bg-[#111111] disabled:hover:border-border disabled:cursor-not-allowed"
+                                            className="px-6 py-3 bg-surface border border-border text-white hover:bg-primary hover:border-primary transition-all font-display tracking-widest uppercase text-sm disabled:opacity-50 disabled:hover:bg-surface disabled:hover:border-border disabled:cursor-not-allowed"
                                         >
                                             Previous
                                         </button>
@@ -155,7 +157,7 @@ export default function Projects() {
                                         <button
                                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(repos.length / reposPerPage)))}
                                             disabled={currentPage === Math.ceil(repos.length / reposPerPage)}
-                                            className="px-6 py-3 bg-[#111111] border border-border text-white hover:bg-primary hover:border-primary transition-all font-display tracking-widest uppercase text-sm disabled:opacity-50 disabled:hover:bg-[#111111] disabled:hover:border-border disabled:cursor-not-allowed"
+                                            className="px-6 py-3 bg-surface border border-border text-white hover:bg-primary hover:border-primary transition-all font-display tracking-widest uppercase text-sm disabled:opacity-50 disabled:hover:bg-surface disabled:hover:border-border disabled:cursor-not-allowed"
                                         >
                                             Next
                                         </button>
@@ -169,19 +171,20 @@ export default function Projects() {
                                     </h3>
                                     <div className="flex flex-col gap-8">
 
-                                        <div className="bg-[#111111] p-6 lg:p-8 border border-border overflow-x-auto flex flex-col items-center">
+                                        <div className="bg-surface p-6 lg:p-8 border border-border overflow-x-auto flex flex-col items-center">
                                             <div className="min-w-[800px] w-full mx-auto flex justify-center">
                                                 <GitHubCalendar
                                                     username={GITHUB_USERNAME}
-                                                    colorScheme="dark"
+                                                    colorScheme={theme}
                                                     theme={{
+                                                        light: ['#f5f5f5', '#ffedd5', '#fdba74', '#f97316', '#ea580c'],
                                                         dark: ['#111111', '#26120b', '#7c3115', '#cc420c', '#f3500f'],
                                                     }}
                                                 />
                                             </div>
                                         </div>
 
-                                        <div className="bg-[#111111] p-6 lg:p-8 border border-border flex flex-col justify-center items-center h-full min-h-[400px]">
+                                        <div className="bg-surface p-6 lg:p-8 border border-border flex flex-col justify-center items-center h-full min-h-[400px]">
                                             <h4 className="font-display text-sm uppercase tracking-widest text-gray-400 mb-6 w-full text-left">Activity Stats</h4>
                                             <div className="w-full h-[350px]">
                                                 <ResponsiveContainer width="100%" height="100%">

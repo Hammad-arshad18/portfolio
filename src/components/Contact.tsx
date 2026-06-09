@@ -163,7 +163,7 @@ export default function Contact() {
                         initial={{ opacity: 0, y: 50, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.9 }}
-                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-[#111111] border border-border text-white px-6 py-4 rounded shadow-2xl"
+                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-surface border border-border text-white px-6 py-4 rounded shadow-2xl"
                     >
                         <CheckCircle2 className="w-5 h-5 text-primary" />
                         <span className="font-display text-sm uppercase tracking-widest">Message sent successfully!</span>

@@ -56,7 +56,7 @@ export default function Stats() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-[#111111] p-8 border border-border text-center sm:text-left flex flex-col justify-center transition-colors hover:bg-white/[0.02] hover:border-primary group"
+                  className="bg-surface p-8 border border-border text-center sm:text-left flex flex-col justify-center transition-colors hover:bg-white/[0.02] hover:border-primary group"
                 >
                   <div className="text-[3.5rem] font-display font-medium text-white leading-none mb-3 group-hover:text-primary transition-colors">
                     <AnimatedCounter end={stat.value} suffix={stat.suffix} duration={2.5} />

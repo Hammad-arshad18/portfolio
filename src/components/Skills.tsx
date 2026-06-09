@@ -68,7 +68,7 @@ export default function Skills() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-[#111111] p-8 border border-border group hover:bg-primary transition-colors duration-300 relative overflow-hidden"
+                  className="bg-surface p-8 border border-border group hover:bg-primary transition-colors duration-300 relative overflow-hidden"
                 >
                   <div className="flex items-center mb-8 relative z-10">
                     <div className="mr-6">
