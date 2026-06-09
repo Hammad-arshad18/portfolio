@@ -1,0 +1,110 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Primitive Helpers
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isSignedIn() { return request.auth != null; }
+    function isVerified() { return isSignedIn() && request.auth.token.email_verified == true; }
+    function isAdmin() { 
+      // Replace with your email
+      return isVerified() && request.auth.token.email == 'hammad.company18@gmail.com'; 
+    }
+
+    // Entity Validations
+    function isValidMessage(data) {
+      return data.keys().hasAll(['name', 'email', 'message', 'createdAt']) &&
+        data.keys().size() == 4 &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+        data.email is string && data.email.size() > 0 && data.email.size() <= 100 &&
+        data.message is string && data.message.size() > 0 && data.message.size() <= 1000 &&
+        data.createdAt is timestamp;
+    }
+
+    function isValidExperience(data, isCreate) {
+      let requiredKeys = ['title', 'company', 'location', 'date', 'highlights', 'tech', 'createdAt', 'updatedAt'];
+      return data.keys().hasAll(requiredKeys) &&
+             data.keys().size() == 8 &&
+             data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+             data.company is string && data.company.size() > 0 && data.company.size() <= 200 &&
+             data.location is string && data.location.size() >= 0 && data.location.size() <= 200 &&
+             data.date is string && data.date.size() >= 0 && data.date.size() <= 100 &&
+             data.highlights is list && data.highlights.size() >= 0 && data.highlights.size() <= 20 &&
+             (data.highlights.size() == 0 || data.highlights[0] is string) &&
+             data.tech is list && data.tech.size() >= 0 && data.tech.size() <= 30 &&
+             (data.tech.size() == 0 || data.tech[0] is string) &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp &&
+             (isCreate ? (data.createdAt == request.time) : (data.createdAt == existing().createdAt)) &&
+             data.updatedAt == request.time;
+    }
+
+    function isValidProject(data, isCreate) {
+      let keys = data.keys();
+      return keys.hasAll(['title', 'description', 'tech', 'createdAt', 'updatedAt']) &&
+             // optional: github, githubIcon, external, externalIcon, externalName
+             data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+             data.description is string && data.description.size() > 0 && data.description.size() <= 5000 &&
+             data.tech is list && data.tech.size() >= 0 && data.tech.size() <= 30 &&
+             (data.tech.size() == 0 || data.tech[0] is string) &&
+             (!('github' in keys) || (data.github is string && data.github.size() <= 500)) &&
+             (!('githubIcon' in keys) || (data.githubIcon is string && data.githubIcon.size() <= 100)) &&
+             (!('external' in keys) || (data.external is string && data.external.size() <= 500)) &&
+             (!('externalIcon' in keys) || (data.externalIcon is string && data.externalIcon.size() <= 100)) &&
+             (!('externalName' in keys) || (data.externalName is string && data.externalName.size() <= 100)) &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp &&
+             (isCreate ? (data.createdAt == request.time) : (data.createdAt == existing().createdAt)) &&
+             data.updatedAt == request.time;
+    }
+
+    function isValidSkillCategory(data, isCreate) {
+      return data.keys().hasAll(['title', 'iconName', 'skills', 'createdAt', 'updatedAt']) &&
+             data.title is string && data.title.size() > 0 && data.title.size() <= 100 &&
+             data.iconName is string && data.iconName.size() > 0 && data.iconName.size() <= 50 &&
+             data.skills is list && data.skills.size() >= 0 && data.skills.size() <= 50 &&
+             (data.skills.size() == 0 || data.skills[0] is string) &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp &&
+             (isCreate ? (data.createdAt == request.time) : (data.createdAt == existing().createdAt)) &&
+             data.updatedAt == request.time;
+    }
+
+    match /messages/{messageId} {
+      allow list: if isAdmin();
+      allow get: if isAdmin() && isValidId(messageId);
+      allow create: if isValidId(messageId) && isValidMessage(incoming());
+      allow update: if false; // immutable
+      allow delete: if isAdmin() && isValidId(messageId);
+    }
+
+    match /experiences/{experienceId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidId(experienceId) && isValidExperience(incoming(), true);
+      allow update: if isAdmin() && isValidId(experienceId) && isValidExperience(incoming(), false);
+      allow delete: if isAdmin() && isValidId(experienceId);
+    }
+
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidId(projectId) && isValidProject(incoming(), true);
+      allow update: if isAdmin() && isValidId(projectId) && isValidProject(incoming(), false);
+      allow delete: if isAdmin() && isValidId(projectId);
+    }
+
+    match /skills/{skillId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidId(skillId) && isValidSkillCategory(incoming(), true);
+      allow update: if isAdmin() && isValidId(skillId) && isValidSkillCategory(incoming(), false);
+      allow delete: if isAdmin() && isValidId(skillId);
+    }
+  }
+}
