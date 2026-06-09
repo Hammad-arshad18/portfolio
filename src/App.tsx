@@ -52,13 +52,11 @@ function Portfolio() {
                             <a href="https://github.com/Hammad-arshad18" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300">
                                 <Github className="w-4 h-4" />
                             </a>
-                            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300">
+                            <a href="https://www.linkedin.com/in/hammad-arshad18" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300">
                                 <Linkedin className="w-4 h-4" />
                             </a>
-                            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary transition-all duration-300">
-                                <Twitter className="w-4 h-4" />
-                            </a>
-                            <a href="https://wa.me/971501234567" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-[#25D366] hover:bg-[#25D366] transition-all duration-300">
+
+                            <a href="https://wa.me/971568687899" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-gray-400 hover:text-white hover:border-[#25D366] hover:bg-[#25D366] transition-all duration-300">
                                 <WhatsAppIcon className="w-4 h-4" />
                             </a>
                         </div>
