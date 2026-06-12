@@ -17,12 +17,38 @@ export default function Contact() {
         setErrorMsg('');
 
         try {
+            // 1. Save to Firebase (keeps a record in your database)
             await addDoc(collection(db, 'messages'), {
                 name: formData.name,
                 email: formData.email,
                 message: formData.message,
                 createdAt: serverTimestamp()
             });
+
+            // 2. Send Email via Web3Forms
+            const web3formsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+            if (web3formsAccessKey) {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        access_key: web3formsAccessKey,
+                        name: formData.name,
+                        email: formData.email,
+                        message: formData.message,
+                    })
+                });
+                
+                const data = await response.json();
+                if (!data.success) {
+                    console.error('Web3Forms Error:', data);
+                }
+            } else {
+                console.warn("Web3Forms access key is missing. Email notification was not sent.");
+            }
 
             setShowToast(true);
             setFormData({ name: '', email: '', message: '' });
